@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#24123d">
+<title>Happy Birthday! 🎂</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; overflow: hidden; display: grid; place-items: center;
+    font-family: "Trebuchet MS", system-ui, sans-serif; color: #fff;
+    background: radial-gradient(circle at top, #57327b 0, #24123d 48%, #100b25 100%);
+  }
+  .stars, .balloons { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .stars { background-image: radial-gradient(#ffffffaa 1px, transparent 1.5px); background-size: 47px 53px; opacity: .35; }
+  .card {
+    position: relative; z-index: 2; width: min(92vw, 560px); padding: 38px 24px 34px;
+    text-align: center; border: 1px solid #ffffff35; border-radius: 28px;
+    background: #ffffff12; backdrop-filter: blur(12px);
+    box-shadow: 0 24px 80px #0006;
+  }
+  .eyebrow { color: #ffd6ef; letter-spacing: .18em; text-transform: uppercase; font-size: .72rem; }
+  h1 { margin: 12px 0 10px; font-size: clamp(2.2rem, 9vw, 4rem); line-height: 1.05; }
+  h1 span { color: #ffd166; }
+  .message { max-width: 420px; margin: 0 auto 24px; color: #f5eafa; line-height: 1.65; font-size: 1.04rem; }
+  button {
+    border: 0; border-radius: 999px; padding: 14px 27px; cursor: pointer;
+    color: #321344; background: linear-gradient(135deg, #ffe08a, #ff9acb);
+    font-size: 1rem; font-weight: 800; box-shadow: 0 8px 25px #ff9acb44;
+    transition: transform .2s, box-shadow .2s;
+  }
+  button:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 30px #ff9acb66; }
+  button:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+  .cake-area { height: 0; opacity: 0; overflow: hidden; transition: height .6s ease, opacity .6s ease; }
+  .cake-area.show { height: 220px; opacity: 1; margin-top: 18px; }
+  .cake { position: relative; width: 190px; height: 135px; margin: 40px auto 0; }
+  .plate { position: absolute; bottom: 0; left: 5px; width: 180px; height: 13px; border-radius: 50%; background: #d9d6ef; box-shadow: 0 5px 0 #9990b8; }
+  .base { position: absolute; bottom: 12px; left: 25px; width: 140px; height: 65px; border-radius: 12px 12px 18px 18px; background: linear-gradient(#ffb3ca 0 18%, #fff0dc 18% 100%); box-shadow: inset -8px 0 #e98da9; }
+  .icing { position: absolute; bottom: 65px; left: 20px; width: 150px; height: 25px; border-radius: 12px 12px 8px 8px; background: #fff0dc; }
+  .drip { position: absolute; top: 15px; width: 12px; height: 17px; border-radius: 0 0 8px 8px; background: #fff0dc; }
+  .d1 { left: 22px; } .d2 { left: 58px; height: 22px; } .d3 { left: 105px; height: 19px; } .d4 { left: 137px; }
+  .candle { position: absolute; z-index: 2; bottom: 88px; left: 89px; width: 12px; height: 38px; border-radius: 4px; background: repeating-linear-gradient(135deg,#fff 0 6px,#9b7bdb 6px 12px); }
+  .flame { position: absolute; bottom: 125px; left: 88px; width: 14px; height: 20px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #ffcf57; box-shadow: 0 0 22px #ffb52e; animation: flicker .45s infinite alternate; }
+  .cake.cut .base { animation: split .8s forwards; }
+  .cake.cut .flame { opacity: 0; }
+  .cake.cut .piece-left { animation: pieceLeft .8s forwards; }
+  .cake.cut .piece-right { animation: pieceRight .8s forwards; }
+  .piece-left,.piece-right { position:absolute; z-index:3; bottom:12px; width:70px; height:65px; pointer-events:none; }
+  .piece-left { left:25px; } .piece-right { right:25px; }
+  .cake.cut .piece-left { background:#ffb3ca; clip-path:polygon(0 0,100% 0,75% 100%,0 100%); }
+  .cake.cut .piece-right { background:#f4a0bd; clip-path:polygon(0 0,100% 0,100% 100%,25% 100%); }
+  @keyframes flicker { to { transform: rotate(-38deg) scale(.85); } }
+  @keyframes split { to { transform: scaleX(.92); } }
+  @keyframes pieceLeft { to { transform: translate(-18px,4px) rotate(-8deg); } }
+  @keyframes pieceRight { to { transform: translate(18px,4px) rotate(8deg); } }
+  .balloon { position: absolute; bottom: -150px; width: 48px; height: 62px; border-radius: 50% 50% 46% 46%; opacity: .85; animation: floatUp linear infinite; }
+  .balloon:before { content:""; position:absolute; width:2px; height:55px; background:#ffffff70; top:60px; left:50%; }
+  .balloon:after { content:""; position:absolute; bottom:-5px; left:20px; border-left:4px solid transparent; border-right:4px solid transparent; border-top:7px solid currentColor; }
+  @keyframes floatUp { to { transform: translateY(-125vh) rotate(12deg); } }
+  .hint { margin-top: 14px; color: #e7d7f1; font-size: .85rem; }
+  .hidden { display: none; }
+  @media (prefers-reduced-motion: reduce) { *, *:before, *:after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="balloons" id="balloons" aria-hidden="true"></div>
+<main class="card">
+  <div class="eyebrow">A little surprise for you ✨</div>
+  <h1>Happy Birthday,<br><span id="friendName">Bestie</span>! 🎉</h1>
+  <p class="message" id="birthdayMessage">May your day be filled with laughter, love, sweet memories, and all the happiness you deserve. Keep shining always! 💖</p>
+  <button id="openBtn" type="button">Click to Open 🎁</button>
+  <section class="cake-area" id="cakeArea" aria-live="polite">
+    <div class="cake" id="cake">
+      <div class="plate"></div><div class="base"></div><div class="icing"></div>
+      <div class="drip d1"></div><div class="drip d2"></div><div class="drip d3"></div><div class="drip d4"></div>
+      <div class="candle"></div><div class="flame"></div>
+      <div class="piece-left"></div><div class="piece-right"></div>
+    </div>
+    <p id="cakeText">Make a wish… 🌟</p>
+  </section>
+  <div class="hint" id="hint">Your special day deserves a little magic 💫</div>
+</main>
+<script>
+  // Personalise these two values before sharing the page.
+  const FRIEND_NAME = "Bestie";
+  const MESSAGE = "May your day be filled with laughter, love, sweet memories, and all the happiness you deserve. Keep shining always! 💖";
+
+  document.getElementById("friendName").textContent = FRIEND_NAME;
+  document.getElementById("birthdayMessage").textContent = MESSAGE;
+
+  const balloonLayer = document.getElementById("balloons");
+  const shades = ["#ff6b9a", "#ffd166", "#8bd3dd", "#b8a1ff", "#ff9f68", "#a8e6a3"];
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement("span");
+    b.className = "balloon";
+    b.style.left = (Math.random() * 100) + "%";
+    b.style.background = shades[i % shades.length];
+    b.style.color = shades[i % shades.length];
+    b.style.animationDuration = (9 + Math.random() * 10) + "s";
+    b.style.animationDelay = (-Math.random() * 18) + "s";
+    b.style.transform = `scale(${0.65 + Math.random() * 0.55})`;
+    balloonLayer.appendChild(b);
+  }
+
+  const openBtn = document.getElementById("openBtn");
+  const cakeArea = document.getElementById("cakeArea");
+  const cake = document.getElementById("cake");
+  openBtn.addEventListener("click", () => {
+    cakeArea.classList.add("show");
+    cake.classList.remove("cut");
+    void cake.offsetWidth;
+    cake.classList.add("cut");
+    openBtn.textContent = "Make a Wish! ✨";
+    document.getElementById("cakeText").textContent = "Yay! Cake time! 🎂 Make a wish…";
+    document.getElementById("hint").textContent = "Sending you the biggest birthday hug! 💗";
+    openBtn.disabled = true;
+    openBtn.style.opacity = ".75";
+  });
+</script>
+</body>
+</html>
